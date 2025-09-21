@@ -1,61 +1,58 @@
-import React from 'react';
-import { Grid, List, ChevronDown } from 'lucide-react';
+// src/components/FilterPanel.jsx
+import React from "react";
+import { FaTh, FaBars } from "react-icons/fa";
 
-const FilterPanel = () => {
+const FilterPanel = ({
+  sortOrder,
+  setSortOrder,
+  itemsPerPage,
+  setItemsPerPage,
+  totalItems,
+}) => {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between p-4 bg-gray-100 border-b border-gray-300 space-y-3 md:space-y-0">
-      
-      {/* Left section: Item count + Filters */}
-      <div className="flex items-center space-x-6">
-        {/* Item Count */}
-        <span className="text-gray-700 text-sm font-medium">13 Items</span>
-
-        {/* Sort By Dropdown */}
-        <div className="flex items-center space-x-2">
-          <span className="text-gray-600 text-sm font-medium">Sort By:</span>
-          <div className="relative">
-            <select
-              className="appearance-none bg-white border border-gray-300 rounded-md py-1.5 pl-3 pr-8 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-              defaultValue="Name"
-            >
-              <option>Name</option>
-              <option>Price</option>
-              <option>Newest</option>
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
-              <ChevronDown className="h-4 w-4" />
-            </div>
-          </div>
+    <div className="w-full bg-gray-100 shadow p-4 rounded-md flex flex-wrap items-center justify-between gap-6">
+      {/* Left section: Items + Sort + Show */}
+      <div className="flex items-center gap-6 flex-wrap">
+        {/* Total Items */}
+        <div className="text-sm text-gray-800 font-medium">
+          {totalItems} Items
         </div>
 
-        {/* Show Dropdown */}
-        <div className="flex items-center space-x-2">
-          <span className="text-gray-600 text-sm font-medium">Show:</span>
-          <div className="relative">
-            <select
-              className="appearance-none bg-white border border-gray-300 rounded-md py-1.5 pl-3 pr-8 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-              defaultValue="12"
-            >
-              <option>6</option>
-              <option>12</option>
-              <option>24</option>
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
-              <ChevronDown className="h-4 w-4" />
-            </div>
-          </div>
+        {/* Sort By */}
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-black">Sort By</span>
+          <select
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:ring-1 focus:ring-blue-400 focus:outline-none"
+          >
+            <option value="asc">Name</option>
+            <option value="desc">Name (Z - A)</option>
+          </select>
+        </div>
+
+        {/* Items Per Page */}
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-gray-600">Show</span>
+          <select
+            value={itemsPerPage}
+            onChange={(e) => setItemsPerPage(Number(e.target.value))}
+            className="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:ring-1 focus:ring-blue-400 focus:outline-none"
+          >
+            <option value={6}>6</option>
+            <option value={9}>9</option>
+            <option value={12}>12</option>
+          </select>
         </div>
       </div>
 
-      {/* Right section: View toggles */}
-      <div className="flex items-center space-x-2">
-        {/* Grid View Button */}
-        <button className="p-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-200 transition-colors">
-          <Grid className="h-5 w-5" />
+      {/* Right section: View Icons */}
+      <div className="flex items-center overflow-hidden rounded-md">
+        <button className="px-3 py-2 bg-blue-50 text-blue-500">
+          <FaTh />
         </button>
-        {/* List View Button */}
-        <button className="p-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-200 transition-colors">
-          <List className="h-5 w-5" />
+        <button className="px-3 py-2 text-gray-500 hover:text-blue-500">
+          <FaBars />
         </button>
       </div>
     </div>

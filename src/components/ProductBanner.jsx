@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProductBanner = () => {
   return (
-    <div className="relative bg-blue-400 py-3 px-6 max-w-4xl mx-auto flex flex-col md:flex-row items-center shadow-lg rounded-lg">
+    <div className="relative bg-blue-400 px-6 max-w-4xl mx-auto flex flex-col md:flex-row items-center shadow-lg rounded-lg">
       {/* Text Content */}
       <div className="text-white text-center md:text-left mb-4 md:mb-0 md:mr-6">
         <h2 className="text-2xl md:text-3xl font-semibold mb-2">Adidas Men Running Sneakers</h2>

@@ -1,72 +1,70 @@
-import React from 'react';
+// src/components/ProductCard.jsx
+import React, { useState } from "react";
+
 const ProductCard = ({ product }) => {
-  if (!product) return null; // prevents crash if product is undefined
+  if (!product) return null;
 
-  const [userRating, setUserRating] = React.useState(null);
-  const [message, setMessage] = React.useState('');
+  const [userRating, setUserRating] = useState(product.ratingValue || 0);
 
-  const handleRatingClick = (rating) => {
-    setUserRating(rating);
-    setMessage(`You gave this product a rating of ${rating}.`);
-  };
-
-  const renderStars = (ratingValue) => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
+  // Render clickable stars
+  const renderStars = () => {
+    return [...Array(5)].map((_, index) => {
+      const ratingValue = index + 1;
+      return (
         <span
-          key={i}
-          className={`cursor-pointer text-xl ${i <= ratingValue ? 'text-yellow-400' : 'text-gray-300'}`}
-          onClick={() => handleRatingClick(i)}
+          key={ratingValue}
+          onClick={() => setUserRating(ratingValue)}
+          className={`cursor-pointer text-base sm:text-lg md:text-xl ${
+            ratingValue <= userRating ? "text-yellow-400" : "text-gray-300"
+          }`}
         >
           ★
         </span>
       );
-    }
-    return stars;
+    });
   };
 
   return (
-    <div className="relative bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+    <div className="relative rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-transform duration-300 hover:-translate-y-1 bg-white">
+      {/* HOT Tag */}
       {product.isHot && (
-        <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+        <span className="absolute top-2 left-2 bg-red-500 text-white text-xs sm:text-sm font-bold px-2 py-1 rounded">
           HOT
         </span>
       )}
-      <div className="p-4 flex flex-col items-center">
-        <img
-          src={product.imageUrl}
-          alt={product.name}
-          className="w-full h-48 object-contain mb-4"
-        />
-        <h3 className="text-lg font-semibold text-gray-800 text-center mb-2">
+
+      <div className="p-3 sm:p-4 flex flex-col items-center">
+        {/* Image Wrapper */}
+        <div className="bg-gray-100 w-full h-40 sm:h-48 md:h-56 flex items-center justify-center mb-3 sm:mb-4 rounded-md">
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            className="max-h-32 sm:max-h-40 md:max-h-48 object-contain"
+          />
+        </div>
+
+        {/* Product Name */}
+        <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 text-center mb-2">
           {product.name}
         </h3>
 
         {/* Rating Section */}
         <div className="flex items-center justify-center space-x-1 mb-2">
-          {renderStars(userRating || product.ratingValue)}
+          {renderStars()}
+          <span className="text-xs sm:text-sm text-gray-600 ml-1 sm:ml-2">
+            ({product.ratingCount || 0})
+          </span>
         </div>
 
-        {message && (
-          <p className="text-green-500 text-sm font-medium text-center mt-1 mb-2">
-            {message}
-          </p>
-        )}
-
-        <span className="text-xs text-gray-500 text-center mb-2">
-          ({product.ratingCount} ratings)
-        </span>
-
         {/* Price Section */}
-        <div className="flex items-center justify-center space-x-2">
-          <span className="text-xl font-bold text-gray-900">
+        <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-2">
+          <span className="text-lg sm:text-xl md:text-2xl font-bold text-blue-600">
             ${product.discountPrice.toFixed(2)}
           </span>
-          <span className="text-sm line-through text-gray-400">
+          <span className="text-xs sm:text-sm md:text-base line-through text-gray-400">
             ${product.price.toFixed(2)}
           </span>
-          <span className="text-xs font-semibold text-red-500">
+          <span className="text-xs sm:text-sm font-semibold text-red-500">
             {product.discountPercent}% Off
           </span>
         </div>
