@@ -1,6 +1,7 @@
 // src/components/FilterPanel.jsx
+import { i } from "framer-motion/client";
 import React from "react";
-import { FaTh, FaBars } from "react-icons/fa";
+import { FaTh, FaBars } from "react-icons/fa"
 
 const FilterPanel = ({
   sortOrder,
